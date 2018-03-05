@@ -1,0 +1,135 @@
+/* 整体样式 */
+body,div,p,hr,section,ul,li{
+    padding:0;
+    margin:0;
+}
+body{
+    background-color: #f2f2f2;
+    color: #636660;
+    min-width: 320px;
+}
+h1{
+    color: #fff;
+}
+.clearfix{
+    content: "";
+    display: block;
+    clear: both;
+}
+a{
+    text-decoration: none;
+    color: #636660;
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+    color: #ff434d;
+}
+#joinUs,#aboutUs{
+    margin-top:25px;
+    margin-bottom:20px;
+}
+.section_title{
+    margin-bottom: 30px;
+}
+.section_title hr{
+    background-color: #cfcfcf;
+    height:1px;
+    margin-top:3px;
+}
+/* 验证信息 */
+.validateMsg{
+    color: red;
+}
+/*aboutUs*/
+#aboutUs .section_main #intro ul{
+    list-style-type: none;
+    text-align: center;
+}
+#aboutUs .section_main #intro ul li{
+    float: left;
+    display: inline-block;
+    width:25%;
+}
+#aboutUs .section_main #intro figure img{
+    max-width:30%;
+}
+#aboutUs .section_main #intro p{
+    text-align: center;
+}
+#aboutUs .section_main #intro section{
+    margin-bottom:25px;
+}
+#aboutUs .section_main #carousel-example-generic .carousel-inner .item{
+    max-height:380px;
+}
+/*joinUs*/
+#joinUs .section_main #Selfintro{
+    resize:none;
+    overflow: auto;
+}
+#joinUs .section_main .help-block{
+    color: #555;
+}
+#joinUs .section_main #sdept{
+    color: #8c8c8c;
+}
+#joinUs .section_main button{
+    width:100%;
+}
+/* 响应式设计 */
+@media screen and (max-width:960px) {
+    .h4{
+        font-size: 1.2em;
+    }
+    .section_title{
+        margin-bottom: 20px;
+    }
+    #section_aboutUs #intro section{
+        margin-bottom:20px;
+    }
+    #section_joinUs,#section_aboutUs{
+        margin-top:20px;
+        margin-bottom:16px;
+    }
+}
+@media screen and (max-width:768px) {
+    .section_title{
+        margin-bottom: 15px;
+    }
+    #section_aboutUs #intro section{
+        margin-bottom:15px;
+    }
+    #section_joinUs,#section_aboutUs{
+        margin-top:15px;
+        margin-bottom:12px;
+    }
+}
+@media screen and (max-width:550px) {
+    .h3{
+        font-size: 1.2em;
+    }
+    .h4{
+        font-size: 1.1em;
+    }
+    /*轮播框文字*/
+    .carousel-inner  p{
+        font-size:0.8em;
+        line-height:0.5em;
+    }
+    .section_title{
+        margin-bottom: 10px;
+    }
+    #intro ul li{
+        float: left;
+        display: inline-block;
+        width:50%;
+    }
+    #section_aboutUs #intro section{
+        margin-bottom:10px;
+    }
+    #section_joinUs,#section_aboutUs{
+        margin-top:8px;
+        margin-bottom:6px;
+    }
+}
