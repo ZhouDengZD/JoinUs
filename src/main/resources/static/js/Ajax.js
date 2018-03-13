@@ -1,5 +1,5 @@
 // version 1.0.0
-function Ajax(opt){
+function ajax(opt){
     opt = opt || {};
     opt.method = opt.method.toUpperCase() || 'POST';//请求类型，默认为POST
     opt.url = opt.url || '';//请求地址，默认为''
@@ -11,18 +11,18 @@ function Ajax(opt){
 
     var xhr = new XMLHttpRequest();
 
-    if(opt.async === true){// 同步请求
-        if(opt.method.toUpperCase === 'POST'){// 请求方式为post
+    if(opt.async === false){// 同步请求
+        if(opt.method.toUpperCase() === 'POST'){// 请求方式为post
             xhr.open('POST', opt.url, false);
             xhr.setRequestHeader('Content-type', 'application/json');
             xhr.send(JSON.stringify(opt.data));
-        }else if(opt.method.toUpperCase === 'GET'){
+        }else if(opt.method.toUpperCase() === 'GET'){
             xhr.open('GET', opt.url, false);
             xhr.send(null);
         }else{
             throw new TypeError('Your request type error.');
         }
-    }else if(opt.async === false){//异步请求
+    }else if(opt.async === true){//异步请求
         xhr.onreadystatechange = function(){
             if(xhr.readyState == 4){
                 if((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304){
@@ -40,27 +40,27 @@ function Ajax(opt){
                 }
             }
         };
-        if(opt.method.toUpperCase == 'POST'){// 请求方式为post
+        if(opt.method.toUpperCase() === 'POST'){// 请求方式为post
             xhr.open('POST', opt.url, true);
             xhr.setRequestHeader('Content-type', 'application/json');
             xhr.send(JSON.stringify(opt.data));
-        }else if(opt.method.toUpperCase == 'GET'){
+        }else if(opt.method.toUpperCase() === 'GET'){
             xhr.open('GET', opt.url, true);
             xhr.send(null);
         }else{
-            throw new TypeError('Your request type error.');
+            throw new TypeError('请求错误.');
         }
     }else{
         throw new TypeError('Param `async` requires "true" or "false" only.');
     } 
 };
-function DefultSuccess(){
+function DefultSuccess(){ 
     console.log('Your request succeeded.');
 };
 function DefultError(){
     console.log('Sorry,Your request failed.');
 };
 //用例
-Ajax({
-    //
-});
+// Ajax({
+//     //
+// });

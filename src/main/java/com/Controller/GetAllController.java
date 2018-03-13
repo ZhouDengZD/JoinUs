@@ -4,9 +4,11 @@ import com.Model.UserInfo;
 import com.Service.SourceCodeService;
 import com.Service.UserService;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,25 +33,49 @@ public class GetAllController {
 
     @RequestMapping("/getAllInfo")
     @ResponseBody
-    public JSONArray getAll(HttpServletRequest request){
+    //使用Ajax.js版
+    public JSONArray getAll(@RequestBody String all, HttpServletRequest request){
+        System.out.println(all);
+        JSONObject j = JSONObject.fromObject(all);
 
-        int rows = Integer.parseInt(request.getParameter("rows"));
-        int pageNo = Integer.parseInt(request.getParameter("pageNo"));
-
-
+        int rows = (int) j.get("rows");
+        int pageNo = (int) j.get("pageNo");
         Page<UserInfo> sourceCodes = this.sourceCodeService.getSourceCode(pageNo, rows);
 
-        List<UserInfo> userInfoList = userService.findAllUsers();
+        //将每一页的内容转换成Json数组
         JSONArray jsonArray = JSONArray.fromObject(sourceCodes.getContent().toArray());
-        Map<String, Object> map = new HashMap<>();
 
+        Map<String, Object> map = new HashMap<>();
         //查询记录的总数以及共多少页
+        List<UserInfo> userInfoList = userService.findAllUsers();
         map.put("totalSize",userInfoList.size());
         map.put("totalPage",Math.ceil((double)userInfoList.size()/10));
         jsonArray.add(map);
-        System.out.println(jsonArray);
 
+        System.out.println(jsonArray.toString());
         return jsonArray;
     }
+
+    //最初版：使用jquery的ajax库版
+    // public JSONArray getAll(HttpServletRequest request){
+
+    //     int rows = Integer.parseInt(request.getParameter("rows"));
+    //     int pageNo = Integer.parseInt(request.getParameter("pageNo"));
+
+
+    //     Page<UserInfo> sourceCodes = this.sourceCodeService.getSourceCode(pageNo, rows);
+
+    //     List<UserInfo> userInfoList = userService.findAllUsers();
+    //     JSONArray jsonArray = JSONArray.fromObject(sourceCodes.getContent().toArray());
+    //     Map<String, Object> map = new HashMap<>();
+
+    //     //查询记录的总数以及共多少页
+    //     map.put("totalSize",userInfoList.size());
+    //     map.put("totalPage",Math.ceil((double)userInfoList.size()/10));
+    //     jsonArray.add(map);
+    //     System.out.println(jsonArray);
+
+    //     return jsonArray;
+    // }
 
 }
