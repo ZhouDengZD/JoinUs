@@ -5,6 +5,7 @@
 function ajaxTest(currentPage) {
     var option = {
         method: 'post',
+        // async:false,
         url: '/getAllInfo',
         data: { rows: 10, pageNo: currentPage },
         dataType: 'json',
@@ -16,7 +17,7 @@ function ajaxTest(currentPage) {
 
             var Data = JSON.parse(data);//将Json字符串解析
             Data.forEach(function(obj,index){
-                if(index != (obj.length-1)){
+                if(index != (Data.length-1)){
                     var sec = document.createElement('section');
                     display.appendChild(sec);
                     // 添加标题
@@ -45,13 +46,13 @@ function ajaxTest(currentPage) {
 
                 }
             });
+            scrollTo(0,0);//回到顶部
             //分页
-            var pagination = document.getElementById('pagination');
-            pagination.paging({
+            $("#pagination").paging({
                 rows:rows,//每页显示条数
                 pageNo: currentPage,//当前所在页码
-                totalPage: data[data.length-1]['totalPage'],//总页数
-                totalSize:data[data.length-1]['totalSize'],//总记录数
+                totalPage: Data[Data.length-1]['totalPage'],//总页数   修改
+                totalSize:Data[Data.length-1]['totalSize'],//总记录数
                 callback: function (currentPage) {
                     ajaxTest(currentPage);
                 }
