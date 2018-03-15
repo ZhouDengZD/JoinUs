@@ -86,14 +86,14 @@ window.onload=function(){
     };
     // 用户信息填写情况验证
     (function(){
-        var Uid=document.getElementById("Uid");
+        var Uid = document.getElementById("Uid");
         EventUtil.addHandler(Uid,"blur",function () {
-            if(this.value===""){
+            if(this.value === ""){
                 createVlidateMsg(this,"请输入您的姓名！");
             }
         });
         EventUtil.addHandler(Uid,"focus",function () {
-            var pre=this.previousSibling;
+            var pre = this.previousSibling;
             if(hasClass(pre,"validateMsg")) {
                 removeBefore(this);
                 this.value = "";
@@ -101,105 +101,112 @@ window.onload=function(){
         });
     })();
     (function(){
-        var Tel=document.getElementById("Tel");
+        var Tel = document.getElementById("Tel");
         EventUtil.addHandler(Tel,"blur",function () {
-            if(this.value===""){
+            if(this.value === ""){
                 createVlidateMsg(this,"请输入您的电话号码！");
             }else{
-                var pattern=/^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/;
+                var pattern = /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/;
                 if(!pattern.test(this.value)){
                     createVlidateMsg(this,"您输入的电话号码格式有误!");
                 }
             }
         });
         EventUtil.addHandler(Tel,"focus",function () {
-            var pre=this.previousSibling;
+            var pre = this.previousSibling;
             if(hasClass(pre,"validateMsg")){
                 removeBefore(this);
-                this.value="";
+                this.value = "";
             }
         });
     })();
     (function(){
-        var Email=document.getElementById("Email");
+        var Email = document.getElementById("Email");
         EventUtil.addHandler(Email,"blur",function(){
-            if(this.value===""){
+            if(this.value === ""){
                 createVlidateMsg(this,"请输入您的邮箱地址！");
             }else{
-                var pattern=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+                var pattern = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
                 if(!pattern.test(this.value)){
                     createVlidateMsg(this,"您输入的邮箱格式有误!");
                 }
             }
         });
         EventUtil.addHandler(Email,"focus",function(){
-            var pre=this.previousSibling;
+            var pre = this.previousSibling;
             if(hasClass(pre,"validateMsg")){
                 removeBefore(this);
-                this.value="";
+                this.value = "";
             }
         });
     })();
     (function(){
-        var Selfintro=document.getElementById("Selfintro");
+        var Selfintro = document.getElementById("Selfintro");
         EventUtil.addHandler(Selfintro,"blur",function () {
-            if(this.value===""){
+            if(this.value === ""){
                 createVlidateMsg(this,"请输入您的个人简介！");
             }
         });
         EventUtil.addHandler(Selfintro,"focus",function () {
-            var pre=this.previousSibling;
+            var pre = this.previousSibling;
             if(hasClass(pre,"validateMsg")) {
                 removeBefore(this);
                 this.value = "";
             }
         });
     })();
-    // 将用户填写的信息录入到模态框
+   
     (function(){
-        var btn_submit=document.getElementById("btn_submit");
-        EventUtil.addHandler(btn_submit,"click",function () {
+        var btn1=document.getElementById("btn1");
+
+        EventUtil.addHandler(btn1,"click",function () {
             var UidVal=document.getElementById("Uid").value;
             var TelVal=document.getElementById("Tel").value;
             var EmailVal=document.getElementById("Email").value;
             var SelfintroVal=document.getElementById("Selfintro").value;
             var ProVal=document.getElementById("Pro").value;
 
-            var UseridVal=document.getElementById("Userid");
-            var TelephoneVal=document.getElementById("Telephone");
-            var EmailboxVal=document.getElementById("Emailbox");
-            var SelfintroductionVal=document.getElementById("Selfintroduction");
-            var ProfessionalVal=document.getElementById("Professional");
+            if(UidVal != "" && TelVal != "" && EmailVal  != "" && SelfintroVal  != "" &&  ProVal  != ""){
+                //获取模态框各项ID
+                var UseridVal=document.getElementById("Userid");
+                var TelephoneVal=document.getElementById("Telephone");
+                var EmailboxVal=document.getElementById("Emailbox");
+                var SelfintroductionVal=document.getElementById("Selfintroduction");
+                var ProfessionalVal=document.getElementById("Professional");
+                 // 将用户填写的信息录入到模态框
+                UseridVal.value=UidVal;
+                TelephoneVal.value=TelVal;
+                EmailboxVal.value=EmailVal
+                SelfintroductionVal.value=SelfintroVal;
+                ProfessionalVal.value=ProVal;
 
-            UseridVal.value=UidVal;
-            TelephoneVal.value=TelVal;
-            EmailboxVal.value=EmailVal
-            SelfintroductionVal.value=SelfintroVal;
-            ProfessionalVal.value=ProVal;
+                $('#myModal').modal('show');
+            }else{
+                alert('必须填完所有选项！');
+            }
         });
-    })();
-    // 将用户信息传到服务器
-    (function(){
-        $('#ok').on('click',function () {
-            var formT = $('#joinForm').serializeArray();//返回Object对象
-            var formJ = JSON.stringify(formT);//返回Json字符串
-            $.ajax({
-                type:'POST',
-                url:'/saveUser',
-                dataType: 'text',
-                data:{
-                    'data':formJ
-                },
-                success:function () {
-                    alert("报名成功！");
-                    window.location.replace("http://localhost:8080")
-                    // console.log(formJ);
-                },
-                error:function () {
-                    alert("报名失败！");
-                }
-            });
-            $('#myModal').modal('hide'); //关闭模态框
+        //将信息传到服务器
+        $('#sub1').on('click',function () {
+
+                var formT = $('#joinForm').serializeArray();//返回Object对象
+                var formJ = JSON.stringify(formT);//返回Json字符串
+                $.ajax({
+                    type:'POST',
+                    url:'/saveUser',
+                    dataType: 'text',
+                    data:{
+                        'data':formJ
+                    },
+                    success:function () {
+                        alert("报名成功！");
+                        window.location.replace("http://localhost:8080")
+                        console.log(formJ);
+                    },
+                    error:function () {
+                        alert("报名失败！");
+                    }
+                });
+                $('#myModal').modal('hide');
         });
     })();
 };
